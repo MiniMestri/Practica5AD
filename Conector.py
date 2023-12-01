@@ -1,19 +1,35 @@
-import subprocess
+from jvdb_conector import Jvdb
 
-class Jvdb:
-    def __init__(self,basededatos):
-        self.basededatos = basededatos
-    def insert(self,grupo,documento,contenido):
-        self.operacion="eliminar"
-        self.grupo=grupo
-        self.documento=documento
-        self.contenido=contenido
-        ruta='"C:\\Users\\fonsi\\Desktop\\ESTUDIO\\IMF 2\\ACCESO A DATOS\\Practicas\\Practica5AD\\codigo.exe" '+self.operacion+' '+self.basededatos+' '+self.grupo+' '+self.documento+' "'+self.contenido+'"'
-        resultado = subprocess.run(ruta,shell=True,stdout=subprocess.PIPE,text=True)
-        if resultado.returncode == 0:
-            return("ok")
-        else:
-            return("ERROR")
-
-conexion1= Jvdb("motogp")
-conexion1.insert("equipos","piloto2","Hola")
+def formulario():
+    
+    global tabla
+    global documento
+    global cadena
+    print("Introduzca nombre de la tabla")
+    tabla=input()
+    print("Introduzca el nombre del documento")
+    documento=input()
+    if(dato =="insertar"):
+        print("Introduzca su contenido")
+        nombre=input("Nombre: ")
+        apellidos=input("Apellidos: ")
+        edad=input("Edad: ")
+        cadena="{nombre: "+nombre+", apellidos: "+apellidos+", edad: "+edad+"}\n"
+        
+global dato
+print("Selecciona la base de datos que desea acceder")
+dato = input()
+conexion= Jvdb(dato)
+print("Desea insertar, eliminar o buscar un registro")
+dato=input()
+if(dato == "insertar"):
+    formulario()  
+    conexion.insertar(tabla,documento,cadena)
+elif(dato=="eliminar"):
+    formulario()
+    conexion.eliminar(tabla,documento)
+elif(dato=="buscar"):
+    formulario()
+    conexion.buscar(tabla,documento)
+else:
+    print("Operacion no completada")
