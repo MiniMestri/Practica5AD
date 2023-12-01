@@ -1,7 +1,6 @@
 from jvdb_conector import Jvdb
 
 def formulario():
-    
     global tabla
     global documento
     global cadena
